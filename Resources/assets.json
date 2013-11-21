@@ -1,0 +1,12 @@
+{
+    "title_logo":"title/logo.png",
+    "title_start":"buttons/start.png",
+    "title_start_hover":"buttons/start-hover.png",
+    "title_exit":"buttons/exit.png",
+    "title_exit_hover":"buttons/exit-hover.png",
+    "header_timer":"icons/timer.png",
+    "header_combo":"icons/combo.png",
+    "header_heart":"icons/heart.png",
+    "white":"utils/white.png",
+    "eof":"eof"
+}
