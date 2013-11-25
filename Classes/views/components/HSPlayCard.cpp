@@ -26,16 +26,12 @@ bool HSPlayCard::init()
     this->addChild(frame);
     
     // Create text.
-    CCLabelTTF *text = CCLabelTTF::create("This is a tweet message.", "Helvetica", 24.0f,
+    CCLabelTTF *text = CCLabelTTF::create("Now Loading...", "Helvetica", 24.0f,
                                           CCSizeMake(frame->getContentSize().width * 0.95f,
                                                      frame->getContentSize().height * 0.95f),
                                           kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop);
     text->setTag(TAG_MSG);
-    text->setString("Re-initialized string.");
     this->addChild(text);
-    
-    // Create user image.
-//    CCSprite *userImg = HS_CREATE_SPRITE(HS_RES_IMG("white"));
     
     // Setup properties.
     this->setContentSize(frame->boundingBox().size);
@@ -63,30 +59,36 @@ void HSPlayCard::draw()
             text->setString(m_model->getMessage());
         }
         
-        CCSprite *img = HS_CREATE_SPRITE(m_model->getImageFilePath().c_str());
-        img->setTag(TAG_USERIMG);
-        
-        CCSize texSize = img->getContentSize();
-        
-        float size = fminf(texSize.width, texSize.height);
-        CCPoint offset = CCPointZero;
-        if (texSize.width / texSize.height > 1.0f) {
-            offset.setPoint((texSize.width - size) * 0.5f, 0.0f);
-        } else {
-            offset.setPoint(0.0f, (texSize.height - size) * 0.5f);
+        CCSprite *img = (CCSprite *) getChildByTag(TAG_USERIMG);
+        if (!img) {
+            img = HS_CREATE_SPRITE(m_model->getImageFilePath().c_str());
+            img->setTag(TAG_USERIMG);
+            
+            CCSize texSize = img->getContentSize();
+            
+            float size = fminf(texSize.width, texSize.height);
+            CCPoint offset = CCPointZero;
+            if (texSize.width / texSize.height > 1.0f) {
+                offset.setPoint((texSize.width - size) * 0.5f, 0.0f);
+            } else {
+                offset.setPoint(0.0f, (texSize.height - size) * 0.5f);
+            }
+            
+            img->setTextureRect(CCRectMake(offset.x, offset.y, size, size));
+            
+            CCSprite *frame = (CCSprite *) getChildByTag(TAG_FRAME);
+            if (frame) {
+                img->setScale(frame->getContentSize().width / size);
+            } else {
+                img->setScale(100.0f / size);
+            }
+            
+//            img->setVisible(false);
+            img->setRotationY(180);
+            
+            this->addChild(img);
         }
         
-        img->setTextureRect(CCRectMake(offset.x, offset.y, size, size));
-        
-        CCSprite *frame = (CCSprite *) getChildByTag(TAG_FRAME);
-        if (frame) {
-            img->setScale(frame->getContentSize().width / size);
-        } else {
-            img->setScale(100.0f / size);
-        }
-        
-//        img->setVisible(false);
-        this->addChild(img);
         
         m_isUpdated = false;
     }

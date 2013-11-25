@@ -11,10 +11,14 @@
 
 #include "HSPlayHeader.h"
 
-const int HSPlayFooter::TAG_DIALOG = 1001;
-const int HSPlayFooter::TAG_BADGE_GOLD = 2001;
-const int HSPlayFooter::TAG_BADGE_SILV = 2002;
-const int HSPlayFooter::TAG_BADGE_BRNZ = 2003;
+const int HSPlayFooter::TAG_DIALOG        = 1001;
+const int HSPlayFooter::TAG_DIALOG_TEXT   = 1002;
+const int HSPlayFooter::TAG_BADGE_GOLD    = 2001;
+const int HSPlayFooter::TAG_BADGE_SILV    = 2002;
+const int HSPlayFooter::TAG_BADGE_BRNZ    = 2003;
+const int HSPlayFooter::TAG_MENU_TWEET    = 3001;
+const int HSPlayFooter::TAG_MENU_CONTINUE = 3002;
+const int HSPlayFooter::TAG_MENU_QUIT     = 3003;
 
 bool HSPlayFooter::init()
 {
@@ -66,11 +70,102 @@ bool HSPlayFooter::init()
     CCSprite *dialog = HS_CREATE_SPRITE(HS_RES_IMG("dialog_frame"));
     dialog->setAnchorPoint(ccp(0.5, 0.5));
     dialog->setPosition(ccp(size.width * 0.5f, size.height - grid.height * 2.0f));
-    dialog->setOpacity(96);
+    dialog->setOpacity(192);
     dialog->setTag(TAG_DIALOG);
     this->addChild(dialog);
     
+    CCLabelTTF *text = CCLabelTTF::create("This is default text.", "Helvetica", 48.0f,
+                                          CCSizeMake(dialog->getContentSize().width  * 0.90f,
+                                                     dialog->getContentSize().height * 0.90f),
+                                          kCCTextAlignmentLeft,
+                                          kCCVerticalTextAlignmentTop);
+    text->setTag(TAG_DIALOG_TEXT);
+    text->setAnchorPoint(ccp(0.5, 0.5));
+    text->setPosition(ccp(dialog->getContentSize().width  * 0.5f,
+                          dialog->getContentSize().height * 0.5f));
+    dialog->addChild(text);
+    
+    // Setup buttons.
+    float menuScale = 0.8f;
+    float menuTrans = 10.0f;
+    
+    CCMenuItem *btnTweet = CCMenuItemImage::create(HS_RES_IMG("footer_tweet"), HS_RES_IMG("footer_tweet_h"));
+    {
+        btnTweet->setTag(TAG_MENU_TWEET);
+        btnTweet->setTarget(this, menu_selector(HSPlayFooter::menuButtonFired));
+        btnTweet->setPosition(ccp(grid.width * -1.0f, 0));
+        btnTweet->setScale(menuScale);
+        CCLabelTTF *lblTweet = CCLabelTTF::create("tweet", "Helvetica", 32.0f);
+        lblTweet->setPosition(ccp(btnTweet->getContentSize().width * 0.5f,
+                                  lblTweet->getContentSize().height * 0.6f));
+        btnTweet->addChild(lblTweet);
+    }
+    
+    CCMenuItem *btnContinue = CCMenuItemImage::create(HS_RES_IMG("footer_continue"), HS_RES_IMG("footer_continue_h"));
+    {
+        btnContinue->setTag(TAG_MENU_CONTINUE);
+        btnContinue->setTarget(this, menu_selector(HSPlayFooter::menuButtonFired));
+        btnContinue->setPosition(ccp(grid.width * 0.0f, 0));
+        btnContinue->setScale(menuScale);
+        CCLabelTTF *lblContinue = CCLabelTTF::create("continue", "Helvetica", 32.0f);
+        lblContinue->setPosition(ccp(btnContinue->getContentSize().width * 0.5f,
+                                     lblContinue->getContentSize().height * 0.6f));
+        btnContinue->addChild(lblContinue);
+    }
+    
+    CCMenuItem *btnQuit = CCMenuItemImage::create(HS_RES_IMG("footer_quit"), HS_RES_IMG("footer_quit_h"));
+    {
+        btnQuit->setTag(TAG_MENU_QUIT);
+        btnQuit->setTarget(this, menu_selector(HSPlayFooter::menuButtonFired));
+        btnQuit->setPosition(ccp(grid.width * 1.0f, 0));
+        btnQuit->setScale(menuScale);
+        CCLabelTTF *lblQuit = CCLabelTTF::create("quit", "Helvetica", 32.0f);
+        lblQuit->setPosition(ccp(btnQuit->getContentSize().width * 0.5f,
+                                 lblQuit->getContentSize().height * 0.6f));
+        btnQuit->addChild(lblQuit);
+    }
+    
+    CCMenu *menu = CCMenu::create(btnTweet, btnContinue, btnQuit, NULL);
+    menu->setPosition(ccp(size.width * 0.5f,
+                          size.height - grid.height * 3.5f + menuTrans));
+    this->addChild(menu);
+    
+    // Setup touch.
+    
     return true;
+}
+
+void HSPlayFooter::menuButtonFired(CCObject *sender)
+{
+    CCNode *node = static_cast<CCNode *>(sender);
+    switch (node->getTag()) {
+        case TAG_MENU_TWEET:
+            break;
+        case TAG_MENU_CONTINUE:
+            break;
+        case TAG_MENU_QUIT:
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Touch event handlers
+bool HSPlayFooter::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    return true;
+}
+void HSPlayFooter::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    
+}
+void HSPlayFooter::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+{
+    
+}
+void HSPlayFooter::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+{
+    
 }
 
 void HSPlayFooter::setNumBadges(int num)

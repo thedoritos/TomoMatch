@@ -19,9 +19,15 @@ class HSPlayFooter : public CCNodeRGBA {
     CCLabelTTF *m_messageLabel;
     
     static const int TAG_DIALOG;
+    static const int TAG_DIALOG_TEXT;
     static const int TAG_BADGE_GOLD;
     static const int TAG_BADGE_SILV;
     static const int TAG_BADGE_BRNZ;
+    
+    static const int TAG_MENU_TWEET;
+    static const int TAG_MENU_CONTINUE;
+    static const int TAG_MENU_QUIT;
+    
     
 public:
     
@@ -36,6 +42,16 @@ public:
     
     void show(float duration);
     void dispose(float duration);
+    
+#pragma mark - Touch event handlers
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+
+private:
+    
+    void menuButtonFired(CCObject *sender);
     
 };
 

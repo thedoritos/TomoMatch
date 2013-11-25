@@ -107,9 +107,9 @@ void HSPlayLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     
     // Show or dispose footer.
     if (!m_footer->isVisible()) {
-        m_footer->show(1.0f);
+        m_footer->show(0.5f);
     } else {
-        m_footer->dispose(1.0f);
+        m_footer->dispose(0.5f);
     }
     
 //    CCDirector::sharedDirector()->replaceScene(HSTitleLayer::scene());

@@ -9,8 +9,14 @@
     "header_combo"      :"icons/combo.png",
     "header_heart"      :"icons/heart.png",
     
-    "card_frame"        :"frames/card.png",
+    "footer_tweet"      :"buttons/tweet.png",
+    "footer_tweet_h"    :"buttons/tweet_hover.png",
+    "footer_continue"   :"buttons/continue.png",
+    "footer_continue_h" :"buttons/continue_hover.png",
+    "footer_quit"       :"buttons/quit.png",
+    "footer_quit_h"     :"buttons/quit_hover.png",
     
+    "card_frame"        :"frames/card.png",
     "dialog_frame"      :"frames/dialog.png",
     
     "badge_gold"        :"icons/prize_gold.png",
