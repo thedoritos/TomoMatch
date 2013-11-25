@@ -54,25 +54,31 @@ namespace HSExtension {
     
     class HSTweet {
         
-        const char* m_userName;
-        const char* m_userScreenName;
-        const char* m_userImgUrl;
-        const char* m_message;
+        std::string mUserName;
+        std::string mUserScreenName;
+        std::string mUserImageUrl;
+        std::string mMessage;
         
     public:
         
-        HSTweet(const char *userScreenName, const char *userName, const char *userImageUrl, const char *message){
-            m_userScreenName = userScreenName;
-            m_userName = userName;
-            m_userImgUrl = userImageUrl;
-            m_message = message;
-        }
+        HSTweet(const char *userScreenName, const char *userName, const char *userImageUrl, const char *message)
+        :mUserName(userName)
+        ,mUserScreenName(userScreenName)
+        ,mUserImageUrl(userImageUrl)
+        ,mMessage(message)
+        {}
+        
         ~HSTweet(){}
         
-        const char *getUserScreenName() const { return m_userScreenName; }
-        const char *getUserName() const { return m_userName; }
-        const char *getUserImageUrl() const { return m_userImgUrl; }
-        const char *getMessage() const { return m_message; }
+        const std::string & getUserScreenName() const { return mUserScreenName; }
+        const std::string & getUserName() const { return mUserName; }
+        const std::string getUserImageUrl() const {
+            std::string base = mUserImageUrl;
+            std::size_t begin = base.rfind("_normal");
+            base.replace(begin, 7, "");
+            return base;
+        }
+        const std::string & getMessage() const { return mMessage; }
     };
     
     class HSTwitterDelegate {

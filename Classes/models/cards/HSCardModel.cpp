@@ -8,7 +8,7 @@
 
 #include "HSCardModel.h"
 
-HSCardModel::HSCardModel(const char* ownerId, const char* ownerImageUrl, const char* message)
+HSCardModel::HSCardModel(const string &ownerId, const string &ownerImageUrl, const string &message)
 {
     m_ownerName = ownerId;
     m_ownerImageUrl = ownerImageUrl;
@@ -19,9 +19,32 @@ HSCardModel::~HSCardModel()
     
 }
 
+const bool HSCardModel::isOwnerEquals(const string &owner) const
+{
+    return m_ownerName.compare(owner) == 0;
+}
+const bool HSCardModel::isOwnerEquals(const HSCardModel &cardModel) const
+{
+    return this->isOwnerEquals(cardModel.getOwnerId());
+}
+
+void HSCardModel::setImageFilePath(const string &path)
+{
+    mOwnerImageFilePath = path;
+}
+const string & HSCardModel::getImageFilePath() const
+{
+    return mOwnerImageFilePath;
+}
+
 const bool HSCardModel::hasTheSameOwner(const HSCardModel &cardModel) const
 {
     return m_ownerName.compare(cardModel.m_ownerName) == 0;
+}
+
+const bool HSCardModel::isPrepared() const
+{
+    return mOwnerImageFilePath.compare("") != 0;
 }
 
 const char* HSCardModel::getOwnerId() const

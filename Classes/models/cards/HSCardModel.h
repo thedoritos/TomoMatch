@@ -20,10 +20,22 @@ class HSCardModel {
     string m_ownerImageUrl;
     string m_message;
     
+    string mOwnerImageFilePath;
+    
 public:
     
-    HSCardModel(const char* ownerId, const char* ownerImageUrl, const char* message);
+    HSCardModel(const string &ownerId, const string &ownerImageUrl, const string &message);
     ~HSCardModel();
+    
+    const bool isOwnerEquals(const string &owner) const;
+    const bool isOwnerEquals(const HSCardModel &cardModel) const;
+    
+    void setImageFilePath(const string &path);
+    const string & getImageFilePath() const;
+    
+    const bool isPrepared() const;
+    
+    
     
     const bool hasTheSameOwner(const HSCardModel &cardModel) const;
     

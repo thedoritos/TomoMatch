@@ -19,7 +19,7 @@ bool HSPlayLayer::init()
     // Setup models.
     HSGame *game = HSGame::sharedInstance();
     game->setDelegate(this);
-    game->beginLoadingCards();
+    game->beginLoadingStage();
     
     // Create components.
     static const ccColor3B kTuyukusa = ccc3( 46, 169, 223);
@@ -41,6 +41,12 @@ bool HSPlayLayer::init()
     m_footer->setPosition(ccp(visOrigin.x, visOrigin.y));
     m_footer->setVisible(false);
     this->addChild(m_footer, 1);
+    
+    m_board = HSPlayBoard::create();
+    m_board->setAnchorPoint(ccp(0, 1));
+    m_board->setPosition(ccp(visOrigin.x,
+                             visOrigin.y + visSize.height - HSPlayHeader::kHeight));
+    this->addChild(m_board);
     
     // Enable touch.
     this->setTouchMode(kCCTouchesOneByOne);
@@ -85,11 +91,6 @@ void HSPlayLayer::update(float dt)
 #pragma mark - Touch event handlers
 bool HSPlayLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!m_footer->isVisible()) {
-        m_footer->show(1.0f);
-    } else {
-        m_footer->dispose(1.0f);
-    }
     return true;
 }
 void HSPlayLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
@@ -98,6 +99,19 @@ void HSPlayLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 }
 void HSPlayLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
+    // Touch cards.
+    bool handled = m_board->handleTouch(pTouch->getLocation());
+    if (handled) {
+        return;
+    }
+    
+    // Show or dispose footer.
+    if (!m_footer->isVisible()) {
+        m_footer->show(1.0f);
+    } else {
+        m_footer->dispose(1.0f);
+    }
+    
 //    CCDirector::sharedDirector()->replaceScene(HSTitleLayer::scene());
 }
 void HSPlayLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
@@ -106,11 +120,11 @@ void HSPlayLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 }
 
 #pragma mark - HSGameDelegate
-void HSPlayLayer::onLoadingCardsCompleted(HSGame *game)
+void HSPlayLayer::onLoadingStageCompleted(HSGame *game)
 {
-    
+    m_board->createCards(HSGame::sharedInstance()->getStage()->getCards());
 }
-void HSPlayLayer::onLoadingCardsFailed(HSGame *game)
+void HSPlayLayer::onLoadingStageFailed(HSGame *game)
 {
     
 }

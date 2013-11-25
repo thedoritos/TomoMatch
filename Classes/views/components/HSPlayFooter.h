@@ -18,6 +18,11 @@ class HSPlayFooter : public CCNodeRGBA {
     
     CCLabelTTF *m_messageLabel;
     
+    static const int TAG_DIALOG;
+    static const int TAG_BADGE_GOLD;
+    static const int TAG_BADGE_SILV;
+    static const int TAG_BADGE_BRNZ;
+    
 public:
     
     virtual bool init();

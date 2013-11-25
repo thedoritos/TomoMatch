@@ -7,12 +7,11 @@
 //
 
 #include "HSTitleLayer.h"
+#include "HSGame.h"
 #include "HSAssets.h"
 
 #include "HSBackground.h"
-
 #include "HSPlayLayer.h"
-
 
 bool HSTitleLayer::init()
 {
@@ -94,7 +93,7 @@ void HSTitleLayer::startGame()
 
 void HSTitleLayer::exitGame()
 {
-    HSTwitter::sharedInstance()->requestTimeline();
+//    HSTwitter::sharedInstance()->requestTimeline();
 //    HSExtension::HSTwitter::postTweet("this is message.");
 }
 
