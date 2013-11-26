@@ -44,15 +44,17 @@ bool HSPlayCard::init()
 
 void HSPlayCard::draw()
 {
+    // Draw components.
     CCNodeRGBA::draw();
     
+    // Update image.
     CCSprite *img = (CCSprite *) getChildByTag(TAG_USERIMG);
     if (img) {
         int rotation = (int) this->getRotationY() % 360;
-//        printf("rotation :%f \n", rotation);
         img->setVisible(0 < rotation && rotation < 180);
     }
     
+    // Update view.
     if (m_isUpdated) {
         CCLabelTTF *text = (CCLabelTTF *) getChildByTag(TAG_MSG);
         if (text) {
@@ -83,13 +85,11 @@ void HSPlayCard::draw()
                 img->setScale(100.0f / size);
             }
             
-//            img->setVisible(false);
+            img->setVisible(false);
             img->setRotationY(180);
             
             this->addChild(img);
         }
-        
-        
         m_isUpdated = false;
     }
 }

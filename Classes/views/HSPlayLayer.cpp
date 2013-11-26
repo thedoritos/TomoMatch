@@ -7,9 +7,8 @@
 //
 
 #include "HSPlayLayer.h"
-#include "HSAssets.h"
-
 #include "HSTitleLayer.h"
+#include "HSAssets.h"
 
 bool HSPlayLayer::init()
 {
@@ -40,6 +39,7 @@ bool HSPlayLayer::init()
     m_footer->setAnchorPoint(ccp(0, 1));
     m_footer->setPosition(ccp(visOrigin.x, visOrigin.y));
     m_footer->setVisible(false);
+    m_footer->setDelegate(this);
     this->addChild(m_footer, 1);
     
     m_board = HSPlayBoard::create();
@@ -127,4 +127,21 @@ void HSPlayLayer::onLoadingStageCompleted(HSGame *game)
 void HSPlayLayer::onLoadingStageFailed(HSGame *game)
 {
     
+}
+
+#pragma mark - HSPlayFooterDelegate
+void HSPlayLayer::onTweetButtonFired(HSPlayFooter *footer)
+{
+    HSTwitter *twitter = HSTwitter::sharedInstance();
+    twitter->showTweetDialog(footer->getMessage());
+}
+void HSPlayLayer::onContinueButtonFired(HSPlayFooter *fotter)
+{
+    
+}
+void HSPlayLayer::onQuitButtonFired(HSPlayFooter *fotter)
+{
+    HSGame *game = HSGame::sharedInstance();
+    
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, HSTitleLayer::scene()));
 }

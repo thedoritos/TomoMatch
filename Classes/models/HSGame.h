@@ -25,17 +25,14 @@ class HSGame : HSTwitterDelegate, HSAssetsDelegate {
 public:
     
     static HSGame * sharedInstance();
-    
     void setDelegate(HSGameDelegate *delegate);
     
-    
+    void beginLoadingTitle();
     void beginLoadingStage();
     
-    
-    const vector<HSCardModel *> & getCardModels();
-    
-    
     HSStageModel* getStage();
+    
+//    const vector<HSCardModel *> & getCardModels();
     
 #pragma mark - HSAssetDelegate
     virtual void onLoadingAssetCompleted(HSAssets *loader, const char* key, const char* path);
@@ -54,6 +51,8 @@ private:
 
 class HSGameDelegate {
 public:
+    virtual void onLoadingTitleCompleted(HSGame *game) = 0;
+    virtual void onLoadingtitleFailed(HSGame *game) = 0;
     virtual void onLoadingStageCompleted(HSGame *game) = 0;
     virtual void onLoadingStageFailed(HSGame *game) = 0;
 };

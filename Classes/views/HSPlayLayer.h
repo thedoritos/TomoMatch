@@ -18,7 +18,7 @@
 
 using namespace cocos2d;
 
-class HSPlayLayer : public CCLayer, HSGameDelegate {
+class HSPlayLayer : public CCLayer, HSGameDelegate, HSPlayFooterDelegate {
     
     HSBackground *m_background;
     HSPlayHeader *m_header;
@@ -41,8 +41,16 @@ public:
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 #pragma mark - HSGameDelegate
+    virtual void onLoadingTitleCompleted(HSGame *game){}
+    virtual void onLoadingtitleFailed(HSGame *game){}
     virtual void onLoadingStageCompleted(HSGame *game);
     virtual void onLoadingStageFailed(HSGame *game);
+    
+#pragma mark - HSPlayFooterDelegate
+    virtual void onTweetButtonFired(HSPlayFooter *footer);
+    virtual void onContinueButtonFired(HSPlayFooter *fotter);
+    virtual void onQuitButtonFired(HSPlayFooter *fotter);
+
 };
 
 #endif /* defined(__TomoMatch__HSPlayLayer__) */

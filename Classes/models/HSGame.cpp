@@ -22,6 +22,13 @@ void HSGame::setDelegate(HSGameDelegate *delegate)
     m_delegate = delegate;
 }
 
+void HSGame::beginLoadingTitle()
+{
+    if (m_delegate) {
+        m_delegate->onLoadingTitleCompleted(this);
+    }
+}
+
 void HSGame::beginLoadingStage()
 {
     // Create new instnce.
@@ -122,10 +129,10 @@ void HSGame::onLoadingAssetFailed(HSAssets *loader, const char* key)
     }
 }
 
-const vector<HSCardModel *> & HSGame::getCardModels()
-{
-    return m_cards;
-}
+//const vector<HSCardModel *> & HSGame::getCardModels()
+//{
+//    return m_cards;
+//}
 
 HSStageModel* HSGame::getStage()
 {

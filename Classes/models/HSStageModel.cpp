@@ -8,6 +8,11 @@
 
 #include "HSStageModel.h"
 
+void HSStageModel::update(float dt)
+{
+    
+}
+
 const CCString & HSStageModel::getTitle() const
 {
     return m_title;

@@ -58,6 +58,12 @@ CCScene* HSTitleLayer::scene()
     return scene;
 }
 
+#pragma mark - Initialize
+void HSTitleLayer::onEnterTransitionDidFinish()
+{
+    
+}
+
 #pragma mark - Update
 void HSTitleLayer::update(float dt)
 {
@@ -88,18 +94,10 @@ void HSTitleLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 #pragma mark - Menu button actions
 void HSTitleLayer::startGame()
 {
-    CCDirector::sharedDirector()->replaceScene(HSPlayLayer::scene());
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, HSPlayLayer::scene()));
 }
 
 void HSTitleLayer::exitGame()
 {
-//    HSTwitter::sharedInstance()->requestTimeline();
-//    HSExtension::HSTwitter::postTweet("this is message.");
-}
-
-#pragma mark - HSTwitterDelegate
-void HSTitleLayer::tweetsReceived(HSTwitter *twitter)
-{
     
 }
-

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/views/components/HSPlayFooter.cpp"
-            timestampString = "407083831.838423"
+            timestampString = "407145417.524444"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "HSPlayFooter::menuButtonFired(CCObject *sender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/views/components/HSPlayFooter.cpp"
-            timestampString = "407083831.838423"
+            timestampString = "407145333.949525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "HSPlayFooter::menuButtonFired(CCObject *sender)"
             landmarkType = "5">
          </BreakpointContent>

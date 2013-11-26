@@ -7,9 +7,8 @@
 //
 
 #include "HSPlayFooter.h"
-#include "HSAssets.h"
-
 #include "HSPlayHeader.h"
+#include "HSAssets.h"
 
 const int HSPlayFooter::TAG_DIALOG        = 1001;
 const int HSPlayFooter::TAG_DIALOG_TEXT   = 1002;
@@ -67,23 +66,25 @@ bool HSPlayFooter::init()
     this->addChild(brnz);
     
     // Setup dialog.
+    GLubyte uiOpacity = 192;
+    
     CCSprite *dialog = HS_CREATE_SPRITE(HS_RES_IMG("dialog_frame"));
     dialog->setAnchorPoint(ccp(0.5, 0.5));
     dialog->setPosition(ccp(size.width * 0.5f, size.height - grid.height * 2.0f));
-    dialog->setOpacity(192);
+    dialog->setOpacity(uiOpacity);
     dialog->setTag(TAG_DIALOG);
     this->addChild(dialog);
     
-    CCLabelTTF *text = CCLabelTTF::create("This is default text.", "Helvetica", 48.0f,
-                                          CCSizeMake(dialog->getContentSize().width  * 0.90f,
-                                                     dialog->getContentSize().height * 0.90f),
-                                          kCCTextAlignmentLeft,
-                                          kCCVerticalTextAlignmentTop);
-    text->setTag(TAG_DIALOG_TEXT);
-    text->setAnchorPoint(ccp(0.5, 0.5));
-    text->setPosition(ccp(dialog->getContentSize().width  * 0.5f,
+    m_dialog = CCLabelTTF::create("This is default text.", "Helvetica", 48.0f,
+                                  CCSizeMake(dialog->getContentSize().width  * 0.90f,
+                                             dialog->getContentSize().height * 0.90f),
+                                  kCCTextAlignmentLeft,
+                                  kCCVerticalTextAlignmentTop);
+    m_dialog->setTag(TAG_DIALOG_TEXT);
+    m_dialog->setAnchorPoint(ccp(0.5, 0.5));
+    m_dialog->setPosition(ccp(dialog->getContentSize().width  * 0.5f,
                           dialog->getContentSize().height * 0.5f));
-    dialog->addChild(text);
+    dialog->addChild(m_dialog);
     
     // Setup buttons.
     float menuScale = 0.8f;
@@ -140,10 +141,19 @@ void HSPlayFooter::menuButtonFired(CCObject *sender)
     CCNode *node = static_cast<CCNode *>(sender);
     switch (node->getTag()) {
         case TAG_MENU_TWEET:
+            if (m_delegate) {
+                m_delegate->onTweetButtonFired(this);
+            }
             break;
         case TAG_MENU_CONTINUE:
+            if (m_delegate) {
+                m_delegate->onContinueButtonFired(this);
+            }
             break;
         case TAG_MENU_QUIT:
+            if (m_delegate) {
+                m_delegate->onQuitButtonFired(this);
+            }
             break;
         default:
             break;
@@ -172,10 +182,16 @@ void HSPlayFooter::setNumBadges(int num)
 {
     
 }
-void HSPlayFooter::setMessage(const string &message)
+
+void HSPlayFooter::setMessage(const char* message)
 {
-    
+    m_dialog->setString(message);
 }
+const char* HSPlayFooter::getMessage() const
+{
+    return m_dialog->getString();
+}
+
 void HSPlayFooter::setTweetEnabled(bool enabled)
 {
     
@@ -215,4 +231,9 @@ void HSPlayFooter::dispose(float duration)
     if (this->isVisible()) {
         this->setVisible(false);
     }
+}
+
+void HSPlayFooter::setDelegate(HSPlayFooterDelegate *delegate)
+{
+    m_delegate = delegate;
 }

@@ -10,12 +10,10 @@
 #define __TomoMatch__HSTitleLayer__
 
 #include "cocos2d.h"
-#include "HSTwitter.h"
 
 using namespace cocos2d;
-using namespace HSExtension;
 
-class HSTitleLayer : public CCLayer, public HSTwitterDelegate {
+class HSTitleLayer : public CCLayer {
     
     CCNode *m_bgNode;
     
@@ -24,6 +22,9 @@ public:
     virtual bool init();
     CREATE_FUNC(HSTitleLayer);
     static CCScene* scene();
+    
+#pragma mark - Initialize
+    virtual void onEnterTransitionDidFinish();
     
 #pragma mark - Update
     virtual void update(float dt);
@@ -37,9 +38,5 @@ public:
 #pragma mark - Menu button actions
     void startGame();
     void exitGame();
-    
-#pragma mark - HSTwitterDelegate
-    virtual void tweetsReceived(HSTwitter *twitter);
-
 };
 #endif /* defined(__TomoMatch__HSTitleLayer__) */

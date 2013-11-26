@@ -26,6 +26,8 @@ class HSStageModel {
     
 public:
     
+    void update(float dt);
+    
     const CCString & getTitle() const;
     const CCString & getSubTitle() const;
     
